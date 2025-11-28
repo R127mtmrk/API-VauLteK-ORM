@@ -4,6 +4,7 @@ require 'Insert.php';
 require 'Select.php';
 require 'Delete.php';
 require 'Update.php';
+require 'Purge.php';
 require 'Table/FieldsAndTables.php';
 
 /**
@@ -19,26 +20,41 @@ require 'Table/FieldsAndTables.php';
  * @return array
  * @throws Exception
  */
-function Request(string $type, string $table, ?array $data = null, ?array $where = null, ?array $fields = null,?array $join = null , ?array $group = null, ?array $order = null, ?array $limit = null): array {
+function Request(
+    string $type,
+    string $table,
+    ?array $data = null,
+    ?array $where = null,
+    ?array $fields = null,
+    ?array $join = null,
+    ?array $group = null,
+    ?array $order = null,
+    ?array $limit = null
+): array {
 
     /** @var array<string,array> $schema */
-    $schema = require __DIR__ . '/table/FieldsAndTables.php';
+    $schema = require __DIR__ . '/Table/FieldsAndTables.php';
 
     if (!array_key_exists($table, $schema)) {
         throw new Exception("Table '$table' does not exist in schema.");
     }
 
     $type = strtolower($type);
+
+    if ($type === 'drop') {
+        throw new Exception("Can't DROP the database via attribute 'drop'.");
+    }
+
     if ($type === 'select') {
 
         return Select(
             table: $table,
             fields: $fields,
             where: $where,
-            group: $group,
             order: $order,
+            limit: $limit,
             joins: $join,
-            limit: $limit
+            group: $group
         );
     }
     if ($type === 'insert') {
@@ -76,6 +92,13 @@ function Request(string $type, string $table, ?array $data = null, ?array $where
         return Delete(
             table: $table,
             where: $where
+        );
+    }
+
+    if ($type === 'purge') {
+        return Purge(
+            params: $schema,
+            table: $table
         );
     }
     throw new Exception("Unknown request type '$type'");

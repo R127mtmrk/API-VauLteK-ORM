@@ -1,12 +1,10 @@
 <?php
 
 /**
- * Génère une requête DELETE SQL
- *
  * @param string $table
- * @param array  $where : [[col, op, val], ...]
- *
- * @return array{query:string, params:array}
+ * @param array $where
+ * @return array
+ * @throws Exception
  */
 function Delete(string $table, array $where): array
 {

@@ -1,13 +1,11 @@
 <?php
 
 /**
- * Génère une requête UPDATE SQL
- *
  * @param string $table
- * @param array  $data   Colonnes à modifier [col => val]
- * @param array  $where  Conditions WHERE : [[col, op, val], ...]
- *
- * @return array{query:string, params:array}
+ * @param array $data
+ * @param array $where
+ * @return array
+ * @throws Exception
  */
 function Update(string $table, array $data, array $where): array
 {

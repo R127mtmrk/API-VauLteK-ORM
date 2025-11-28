@@ -1,12 +1,9 @@
 <?php
 
 /**
- * Génère une requête INSERT SQL
- *
  * @param string $table
- * @param array  $data  [colonne => valeur]
- *
- * @return array{query:string, params:array}
+ * @param array $data
+ * @return array
  */
 function Insert(string $table, array $data): array
 {

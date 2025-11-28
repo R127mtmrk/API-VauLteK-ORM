@@ -16,7 +16,7 @@ require __DIR__ . '/orm/Request/TypeRequest.php';
 require __DIR__ . '/orm/Request/DBManager.php';
 
 // Routes Manager
-require __DIR__ . '/routes/router.php';
+require __DIR__ . '/routes/Router.php';
 
 // Autoload contrôleurs & services (simple)
 spl_autoload_register(function($class) {
